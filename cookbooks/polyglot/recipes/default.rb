@@ -99,6 +99,11 @@ package ['build-essential', 'cmake']
 #package ['nodejs']
 
 
+# Go (more modern than Ubuntu golang-go package)
+
+#execute 'snap install --classic go' do
+#end
+
 # SWIG
 
 #package 'swig'
