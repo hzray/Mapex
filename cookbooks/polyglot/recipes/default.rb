@@ -1,14 +1,14 @@
 ubuntu_mirror = 'http://archive.ubuntu.com/ubuntu/'
 # ubuntu_mirror = 'http://mirror.rcg.sfu.ca/mirror/ubuntu/'
-ubuntu_release = 'bionic'
-ubuntu_version = '18.04'
+ubuntu_release = 'focal'
+ubuntu_version = '20.04'
 username = 'vagrant'
 user_home = '/home/' + username
-project_home = user_home + '/project/demos' # you may need to change the working directory to match your project
+project_home = user_home + '/project/mq-demos' # you may need to change the working directory to match your project
 
 
-python3_packages = '/usr/local/lib/python3.6/dist-packages'
-ruby_gems = '/var/lib/gems/2.5.0/gems/'
+python3_packages = '/usr/local/lib/python3.8/dist-packages'
+ruby_gems = '/var/lib/gems/2.7.0/gems/'
 
 
 # Get Ubuntu sources set up and packages up to date.
@@ -33,7 +33,7 @@ directory '/opt/installers'
 
 # Basic packages many of us probably want. Includes gcc C and C++ compilers.
 
-package ['build-essential', 'cmake']
+#package ['build-essential', 'cmake']
 
 
 # Other core language tools you might want
@@ -118,8 +118,8 @@ package ['build-essential', 'cmake']
 #  creates "#{python3_packages}/pika/__init__.py"
 #end
 # Ruby bunny library
-#execute 'gem install bunny -v 2.15.0' do
-#  creates "#{ruby_gems}/bunny-2.15.0/Gemfile"
+#execute 'gem install bunny -v 2.17.0' do
+#  creates "#{ruby_gems}/bunny-2.17.0/Gemfile"
 #end
 # Go amqp library
 #execute 'go get github.com/streadway/amqp github.com/google/uuid' do
@@ -152,6 +152,7 @@ package ['build-essential', 'cmake']
 #  creates project_home + '/node_modules/zeromq/package.json'
 #end
 # Go zmq4 library
+#package 'pkg-config'
 #execute 'go get github.com/pebbe/zmq4' do
 #  cwd project_home 
 #  user username
@@ -162,7 +163,7 @@ package ['build-essential', 'cmake']
 
 # GraalVM
 
-#graalvm_version = '20.1.0'
+#graalvm_version = '20.2.0'
 #graalvm_directory = "graalvm-ce-java11-#{graalvm_version}"
 #remote_file '/opt/installers/graalvm.tar.gz' do
 #  source "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-#{graalvm_version}/graalvm-ce-java11-linux-amd64-#{graalvm_version}.tar.gz"
