@@ -38,7 +38,7 @@ directory '/opt/installers'
 
 # Other core language tools you might want
 
-#package ['python3', 'python3-pip', 'python3-dev']  # Python
+package ['python3', 'python3-pip', 'python3-dev']  # Python
 #package ['ghc', 'libghc-random-dev', 'cabal-install']  # Haskell
 #package 'golang-go'  # Go
 #package 'erlang'  # Erlang
@@ -46,7 +46,7 @@ directory '/opt/installers'
 #package ['rustc', 'cargo']  # Rust
 #package 'scala'  # Scala 2.11
 #package ['ruby', 'ruby-dev']  # Ruby
-#package ['openjdk-11-jdk', 'maven']  # Java
+package ['openjdk-11-jdk', 'maven']  # Java
 #package ['php-cli', 'php-pear']  # PHP
 #package 'clang' # Clang C/C++ compiler
 
@@ -114,9 +114,9 @@ directory '/opt/installers'
 #package ['rabbitmq-server']
 
 # Python pika library
-#execute 'pip3 install pika==1.1.0' do
-#  creates "#{python3_packages}/pika/__init__.py"
-#end
+execute 'pip3 install pika==1.1.0' do
+creates "#{python3_packages}/pika/__init__.py"
+end
 # Ruby bunny library
 #execute 'gem install bunny -v 2.17.0' do
 #  creates "#{ruby_gems}/bunny-2.17.0/Gemfile"
