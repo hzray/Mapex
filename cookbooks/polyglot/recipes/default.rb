@@ -111,7 +111,7 @@ package ['openjdk-11-jdk', 'maven']  # Java
 
 # RabbitMQ-related things
 
-#package ['rabbitmq-server']
+package ['rabbitmq-server']
 
 # Python pika library
 execute 'pip3 install pika==1.1.0' do
@@ -137,9 +137,9 @@ end
 # C/C++ library and dev library
 #package ['libzmq5', 'libzmq5-dev']
 # Python pyzmq library
-#execute 'pip3 install pyzmq==19.0.1' do
-#  creates "#{python3_packages}/zmq/__init__.py"
-#end
+# execute 'pip3 install pyzmq==19.0.1' do
+# creates "#{python3_packages}/zmq/__init__.py"
+# end
 # Ruby ezmq library
 #execute 'gem install ezmq -v 0.4.12' do
 #  creates "#{ruby_gems}/ezmq-0.4.12/Gemfile"

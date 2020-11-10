@@ -38,5 +38,6 @@ class DemoRpcClient(object):
 
 
 rpc = DemoRpcClient()
-response = rpc.call({'string': 'test string'})
+# response = rpc.call({'string': 'HelloWorld'})
+response = rpc.call({'string': [ 1, 2, 3]})
 print(response['length'])

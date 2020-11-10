@@ -11,8 +11,12 @@ channel.queue_declare(queue='rpc_queue')
 
 
 def get_length(request):
-    length = len(request['string'])
-    return {'length': length}
+
+    s = request['string'][0] + request['string'][1] + request['string'][2]
+    return {'length': s}
+    
+    # length = len(request['string'])
+    # return {'length': length}
 
 
 def on_request(ch, method, props, body):
