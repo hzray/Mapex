@@ -4,15 +4,15 @@
         <meta charset="UTF-8">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600" rel="stylesheet" type="text/css">
         <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='CSS/style.css') }}">
+        <link type="text/css" rel="stylesheet" href="../CSS/style.css">
         <title>Budget Calculator</title>
     </head>
     <body>
+        
         <div class="top">
             <div class="budget">
                 <div class="budget__title">
-                    Available Budget in <span class="budget__title--month">{{ month }}</span>:
+                    Available Budget in <span class="budget__title--month">%Month%</span>:
                 </div>
                 
                 <div class="budget__value">+ 0</div>
@@ -44,14 +44,6 @@
                         <option value="inc" selected>+</option>
                         <option value="exp">-</option>
                     </select>
-
-                    <select class="add__category">
-                        <option value="food" selected>food</option>
-                        <option value="transportation">transportation</option>
-                        <option value="home">home</option>
-                        <option value="entertainment">entertainment</option>
-                    </select>
-
                     <input type="text" class="add__description" placeholder="Add description">
                     <input type="number" class="add__value" placeholder="Value">
                     <button class="add__btn"><i class="ion-ios-checkmark-outline"></i></button>
@@ -91,9 +83,6 @@
                         -->
                         
                     </div>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-                    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-                    <div class="chart" id="piegraph"></div>
                 </div>
                 
                 
@@ -131,10 +120,8 @@
                 </div>
             </div>
         </div>
-
         
-        
-        <script type=text/javascript src="{{url_for('static', filename='JS/temp.js') }}"></script>
-        
+        <!-- <script src="../JS/app.js"></script> -->
+        <script src="../JS/temp.js"></script>
     </body>
 </html>

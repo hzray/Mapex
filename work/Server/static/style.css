@@ -136,18 +136,6 @@ body {
     transition: border 0.3s;
 }
 
-.add_category {
-    width: 55px;
-    border: 1px solid #e7e7e7;
-    height: 44px;
-    font-size: 18px;
-    color: inherit;
-    background-color: #fff;
-    margin-right: 10px;
-    font-weight: 300;
-    transition: border 0.3s;
-}
-
 
 
 .add__description,
@@ -286,8 +274,6 @@ h2 {
     color: #FF5049;
 
 }
-
-
 
 .unpaid .item__percentage { box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1); }
 .unpaid:hover .item__description { font-weight: 900; }

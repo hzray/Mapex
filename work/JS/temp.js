@@ -27,7 +27,6 @@ var incomeRecords = []; // Array of Income objects
 var totalExpenses = 0;
 var totalIncome = 0;
 var expensePercentage = 0.0;
-var netBudget = 0.0;
 
 var DOMstrings = {
         inputType: '.add__type',
@@ -140,6 +139,7 @@ var updatePercentageView = function() {
 }
 
 var updateBudgetView = function() {
+    var netBudget, symbol;
     updateTotals();
     netBudget = totalIncome - totalExpenses;
     type = netBudget > 0 ? 'inc':'exp';
@@ -201,26 +201,12 @@ var addItem = function() {
     AddToBuffer(info.type, info.description, info.amount);
     // 3. Update UI
     AddToListView(info.type);
-    updateBudgetView();new_freq = $(DOMstrings.budgetValue).val()
+    updateBudgetView();
     updatePercentageView();
     updateExpenseItemPercentage();
     // 4. Clear input fields
     cleanInputField();
-    // send data to flask 
-    sendBudgetToFlask();
-}
 
-var sendBudgetToFlask = function() {
-    $.ajax({
-        url: "/bar",
-        type: "GET",
-        contentType: 'application/json;charset=UTF-8',
-        data: {'income': totalIncome, 'expense':totalExpenses},
-        dataType:"json",
-        success: function (data) {
-            Plotly.newPlot('piegraph', data);
-        }
-    });
 }
 
 
@@ -285,6 +271,15 @@ var formatNumber = function(num, type) {
     return sign + ' ' + int + '.' + dec;
 }
     
+var displayMonth = function() {
+    var months, now, year, month;
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+     now = new Date();
+    month = now.getMonth();
+    year = now.getFullYear();
+    document.querySelector(DOMstrings.dateLabel).textContent = months[month] + ' '+ year;
+}
+
 var changeType = function() {
     var fields = document.querySelectorAll(
         DOMstrings.inputType + ',' + DOMstrings.inputDescription + ',' + DOMstrings.inputValue);
@@ -297,6 +292,7 @@ var changeType = function() {
 }
 
 var setupEventListener = (function() {
+	console.log('123');
     // set up add item listner
     document.querySelector(DOMstrings.inputBtn).addEventListener('click', addItem);
     document.addEventListener('keypress', function(event) {
@@ -309,9 +305,10 @@ var setupEventListener = (function() {
 
     // change listener
     document.querySelector(DOMstrings.inputType).addEventListener('change', changeType);
+
+    // sep up time
+    displayMonth();
 })() 
-
-
 
 
 
