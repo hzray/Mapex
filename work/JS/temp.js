@@ -1,24 +1,29 @@
-/* Function Constructors */
-function Income(id, description, amount) {
-    this.id = id;
-    this.description = description;
-    this.amount = amount;
-}
-
-function Expense(id, description, amount) {
-    this.id = id;
-    this.description = description;
-    this.amount = amount;
-    this.percentage = -1;
-}
-
-Expense.prototype.calPercentage = function() {
-    if (totalIncome > 0) {
-        this.percentage = Math.round((this.amount / totalIncome) * 100)
-    } else {
-        this.percentage = -1;
+class Income {
+    constructor(id, description, amount, category) {
+        this.id = id;
+        this.description = description;
+        this.amount = amount;
+        this.category = category;
     }
 }
+
+class Expense {
+    constructor(id, description, amount, category) {
+        this.id = id;
+        this.description = description;
+        this.amount = amount;
+        this.category = category;
+        this.percentage = -1;
+    }
+    calPercentage() {
+        if (totalIncome > 0) {
+            this.percentage = Math.round((this.amount / totalIncome) * 100);
+        } else {
+            this.percentage = -1;
+        }
+    }
+}
+
 
 
 /* Shared Variables */
@@ -47,17 +52,16 @@ var DOMstrings = {
 
 
 
-
-
 var extractInput = function() {
     return {
-        type: document.querySelector(DOMstrings.inputType).value,
-        description: document.querySelector(DOMstrings.inputDescription).value,
-        amount: parseFloat(document.querySelector(DOMstrings.inputValue).value),
+        type: $(DOMstrings.inputType).val(),
+        description: $(DOMstrings.inputDescription).val(),
+        amount: parseFloat($(DOMstrings.inputValue).val()),
+        category: $(DOMstrings.inputCategory).val()
     }
 }
 
-var AddToBuffer = function(type, description, amount) {
+var AddToBuffer = function(type, description, amount, category) {
     var id;
     if (type === 'inc') {
         if (incomeRecords.length === 0) {
@@ -65,7 +69,7 @@ var AddToBuffer = function(type, description, amount) {
         } else {
             id = incomeRecords[incomeRecords.length-1].id + 1;
         }
-        var income = new Income(id, description, amount);
+        var income = new Income(id, description, amount, category);
         incomeRecords.push(income);
     } else if (type === 'exp') {
         if (expenseRecords.length === 0) {
@@ -73,7 +77,7 @@ var AddToBuffer = function(type, description, amount) {
         } else {
             id = expenseRecords[expenseRecords.length-1].id + 1;
         }
-        var expense = new Expense(expenseRecords.length, description, amount);
+        var expense = new Expense(id, description, amount, category);
         expenseRecords.push(expense);
     }
 }
@@ -108,8 +112,8 @@ var AddToListView = function(type) {
 }
 
 var cleanInputField = function() {
-    document.querySelector(DOMstrings.inputDescription).value = '';
-    document.querySelector(DOMstrings.inputValue).value = '';
+    $(DOMstrings.inputDescription).val('');
+    $(DOMstrings.inputValue).val('');
 }
 
 
@@ -125,8 +129,8 @@ var updateTotals = function() {
         totalExpenses += expenseRecords[i].amount;
     }
 
-    document.querySelector(DOMstrings.incomeTotal).textContent = formatNumber(totalIncome, 'inc');
-    document.querySelector(DOMstrings.expenseTotal).textContent = formatNumber(totalExpenses, 'exp')
+    $(DOMstrings.incomeTotal).text(formatNumber(totalIncome, 'inc'))
+    $(DOMstrings.expenseTotal).text(formatNumber(totalExpenses, 'exp'))
     
 }
 
@@ -199,7 +203,7 @@ var addItem = function() {
         return;
     }
     // 2. Add the item to corresponding records buffer 
-    AddToBuffer(info.type, info.description, info.amount);
+    AddToBuffer(info.type, info.description, info.amount, info.category);
     // 3. Update UI
     AddToListView(info.type);
     updateBudgetView();
@@ -293,17 +297,20 @@ var changeType = function() {
     document.querySelector(DOMstrings.inputBtn).classList.toggle('red');
 
     //
-    var expOption = '<option value="food" selected>food</option>\
-                        <option value="home">home</option>\
-                        <option value="cloth">clothing</option>\
-                        <option value="leisure">leisure</option>\
-                        <option value="education">education</option>\
-                        <option value="other">other</option>'
+    var expOption = '<option value="housing" selected>Housing</option>\
+                        <option value="transport">Transportation</option>\
+                        <option value="food">Food</option>\
+                        <option value="cloth">Clothing</option>\
+                        <option value="education">Education</option>\
+                        <option value="leisure">Leisure</option>\
+                        <option value="loan">Loan</option>\
+                        <option value="exp_other">Other</option>'
     
-    var incOption  = '<option value="food" selected>salary</option>\
-                      <option value="home">investment</option>\
-                      <option value="cloth">gabble</option>\
-                      <option value="leisure">others</option>'
+    var incOption  = '<option value="salary" selected>Salary</option>\
+                      <option value="saving">Saving</option>\
+                      <option value="investment">Investment</option>\
+                      <option value="pension">Pesion</option>\
+                      <option value="inc_other">Other</option>'
     
     if (document.querySelector(DOMstrings.inputType).value == 'inc') {
         $(DOMstrings.inputCategory).html(incOption);
