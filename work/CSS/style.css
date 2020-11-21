@@ -136,6 +136,18 @@ body {
     transition: border 0.3s;
 }
 
+.add__category {
+    width: 120px;
+    border: 1px solid #e7e7e7;
+    height: 44px;
+    font-size: 18px;
+    color: inherit;
+    background-color: #fff;
+    margin-right: 10px;
+    font-weight: 300;
+    transition: border 0.3s;
+}
+
 
 
 .add__description,
@@ -169,6 +181,7 @@ body {
 .add__btn:active { transform: translateY(2px); }
 
 .add__type:focus,
+.add__category:focus,
 .add__description:focus,
 .add__value:focus {
     outline: none;

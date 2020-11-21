@@ -41,7 +41,8 @@ var DOMstrings = {
         expensePercent: '.budget__expenses--percentage',
         container: '.container',
         expensePercLabel: '.item__percentage',
-        dateLabel:'.budget__title--month'
+        dateLabel:'.budget__title--month',
+        inputCategory:'.add__category'
 }
 
 
@@ -280,16 +281,38 @@ var displayMonth = function() {
     document.querySelector(DOMstrings.dateLabel).textContent = months[month] + ' '+ year;
 }
 
+
 var changeType = function() {
     var fields = document.querySelectorAll(
-        DOMstrings.inputType + ',' + DOMstrings.inputDescription + ',' + DOMstrings.inputValue);
+        DOMstrings.inputType + ',' + DOMstrings.inputCategory +',' + DOMstrings.inputDescription + ',' + DOMstrings.inputValue);
 
     nodeListForEach(fields, function(cur){
         cur.classList.toggle('red-focus');
     });
 
     document.querySelector(DOMstrings.inputBtn).classList.toggle('red');
+
+    //
+    var expOption = '<option value="food" selected>food</option>\
+                        <option value="home">home</option>\
+                        <option value="cloth">clothing</option>\
+                        <option value="leisure">leisure</option>\
+                        <option value="education">education</option>\
+                        <option value="other">other</option>'
+    
+    var incOption  = '<option value="food" selected>salary</option>\
+                      <option value="home">investment</option>\
+                      <option value="cloth">gabble</option>\
+                      <option value="leisure">others</option>'
+    
+    if (document.querySelector(DOMstrings.inputType).value == 'inc') {
+        $(DOMstrings.inputCategory).html(incOption);
+    } else {
+        $(DOMstrings.inputCategory).html(expOption);
+    }
+                      
 }
+
 
 var setupEventListener = (function() {
 	console.log('123');
