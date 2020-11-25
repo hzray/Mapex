@@ -11,7 +11,8 @@ const inputRate = document.querySelector('.form__input--rate');
 
 
 class Review {
-    constructor(coords, type, name, price, rate) {
+    constructor(id, coords, type, name, price, rate) {
+        this.id = id;
         this.coords = coords;
         this.type = type;
         this.name = name;
@@ -29,66 +30,42 @@ class Review {
         } else {
             return 'perfect';
         }
+    };
+
+    getDescription() {
+        this. description = '';
+        var symbol;
+        switch (this.type) {
+            case 'food':
+                symbol = '🍲';
+                break;
+            case 'leisure':
+                symbol = '🎤';
+                break;
+            case 'hotel':
+                symbol = '🛏️';
+                break;
+            case 'beauty':
+                symbol = '💈';
+                break;
+            case 'activity':
+                symbol = '⚾';
+                break;
+            case 'attraction':
+                symbol = '🏕️';
+                break;
+            default:
+                symbol = '✨'
+                break;
+        }
+        this.description = this.description + symbol + '    ' + this.name;
+        console.log(this.description);
+        return this.description
     }
 }
 
 
 
-
-
-class Workout {
-    date = new Date();
-    id = (Date.now() + '').slice(-10);
-    clicks = 0;
-
-    constructor(coords, distance, duration) {
-        this.coords = coords;
-        this.distance = distance;
-        this.duration = duration;
-        
-    }
-
-    _setDescription() {
-        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
-                         'September', 'October', 'November', 'December'];
-        this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${months[this.date.getMonth()]} 
-                            ${this.date.getDate()}`;              
-    }
-
-}
-
-class Running extends Workout {
-    type = 'running'
-    constructor(coords, distance, duration, cadence) {
-        super(coords, distance, duration);
-        this.cadence = cadence;
-        this.calcPace();
-        this._setDescription();
-    }
-
-    calcPace() {
-        // min/km
-        this.pace = this.duration / this.distance;
-        return this.pace;
-    }
-}
-
-
-
-class Cycling extends Workout {
-    type = 'cycling';
-    constructor(coords, distance, duration, elevationGain) {
-        super(coords, distance, duration);
-        this.elevationGain = elevationGain;
-        this.calcSpeed();
-        this._setDescription();
-    }
-
-    calcSpeed() {
-        this.speed = this.distance / (this.duration / 60);
-        return this.speed
-    }
-}
 
 class App {
     #map;
@@ -146,7 +123,7 @@ class App {
     }
 
     _hideForm() {
-        inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '';    
+        inputName.value = inputPrice.value = '';    
         form.style.display = 'none';
         form.classList.add('hidden'); 
         setTimeout(() => (form.style.display = 'grid'), 1000);
@@ -167,11 +144,16 @@ class App {
         const rate = inputRate.value;
 
         const { lat, lng } = this.#mapEvent.latlng;
-        if (price < 0) {
+        if (name ===  '' || price === '') {
+            return alert('Please enter all information');
+        }
+        if (isNaN(price) || price < 0 ) {
             return alert('Price have to be a positive number');
         }
-        const review = new Review([lat,lng], type, name, price, rate);
 
+        const id = this.#reviewsArray.length === 0 ? 0 : this.#reviewsArray[this.#reviewsArray.length-1].id+1;
+        const review = new Review(id, [lat,lng], type, name, price, rate);
+        console.log(review.id);
         // Add new object to workout array
         this.#reviewsArray.push(review);
         
@@ -179,7 +161,7 @@ class App {
         this._renderReviewMarker(review);
 
         // Render workout on list
-        this._renderWorkout(review);
+        this._renderReview(review);
         
 
         
@@ -192,31 +174,9 @@ class App {
     }
 
     _renderReviewMarker(review) {
-        var popupContent, symbol, rate, customerIcon;
-        switch (review.type) {
-            case 'food':
-                symbol = '🍲';
-                break;
-            case 'leisure':
-                symbol = '🎤';
-                break;
-            case 'hotel':
-                symbol = '🛏️';
-                break;
-            case 'beauty':
-                symbol = '💈';
-                break;
-            case 'activity':
-                symbol = '⚾';
-                break;
-            case 'attraction':
-                symbol = '🏕️';
-                break;
-            default:
-                symbol = '✨'
-                break;
-        }
-        popupContent = symbol + review.name;
+        var popupContent, rate, customerIcon;
+        popupContent = review.getDescription();
+        
         rate = review.convertRate();
         customerIcon = this._makeMarker(rate);
 
@@ -231,65 +191,65 @@ class App {
                     className: `${rate}-popup`
                 })
             )
-            //.setPopupContent(`${review.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${review.description}`)
             .setPopupContent(popupContent)
             .openPopup();
     }
 
-    _renderWorkout(workout) {
+    _renderReview(review) {
+        var rate = review.convertRate();
         let html = `
-        <li class="workout workout--${workout.type}" data-id="${workout.id}">
-        <h2 class="workout__title">${workout.description}</h2>
-        <div class="workout__details">
-          <span class="workout__icon">${workout.type === 'running'? '🏃‍♂️' : '🚴‍♀️'}</span>
-          <span class="workout__value">${workout.distance}</span>
-          <span class="workout__unit">km</span>
+        <li class="review review--${rate}" data-id="${review.id}">
+        <h2 class="review__title">${review.description}</h2>
+        <div class="review__details">
+          <span class="review__icon">💵  </span>
+          <span class="review__value"> ${review.price}</span>
+          <span class="review__unit"> /per</span>
         </div>
-        <div class="workout__details">
-            <span class="workout__icon">⏱</span>
-            <span class="workout__value">${workout.duration}</span>
-            <span class="workout__unit">min</span>
+        <div class="review__details">
+            <span class="review__icon">⭐</span>
+            <span class="review__value">${review.rate}</span>
           </div>
         `;
 
-        if (workout.type === 'running') {
-            html += `
-            <div class="workout__details">
-            <span class="workout__icon">⚡️</span>
-            <span class="workout__value">${workout.pace.toFixed(1)}</span>
-            <span class="workout__unit">min/km</span>
-          </div>
-          <div class="workout__details">
-            <span class="workout__icon">🦶🏼</span>
-            <span class="workout__value">${workout.cadence}</span>
-            <span class="workout__unit">spm</span>
-          </div>
-          </li>`;
-        }
+        // if (review.type === 'running') {
+        //     html += `
+        //     <div class="workout__details">
+        //     <span class="workout__icon">⚡️</span>
+        //     <span class="workout__value">${review.pace.toFixed(1)}</span>
+        //     <span class="workout__unit">min/km</span>
+        //   </div>
+        //   <div class="workout__details">
+        //     <span class="workout__icon">🦶🏼</span>
+        //     <span class="workout__value">${review.cadence}</span>
+        //     <span class="workout__unit">spm</span>
+        //   </div>
+        //   </li>`;
+        // }
 
-        if (workout.type === 'cycling') {
-            html +=  `<div class="workout__details">
-            <span class="workout__icon">⚡️</span>
-            <span class="workout__value">${workout.speed.toFixed(1)}</span>
-            <span class="workout__unit">km/h</span>
-          </div>
-          <div class="workout__details">
-            <span class="workout__icon">⛰</span>
-            <span class="workout__value">${workout.elevationGain}</span>
-            <span class="workout__unit">m</span>
-          </div>
-        </li>`
-        }
+        // if (review.type === 'cycling') {
+        //     html +=  `<div class="workout__details">
+        //     <span class="workout__icon">⚡️</span>
+        //     <span class="workout__value">${review.speed.toFixed(1)}</span>
+        //     <span class="workout__unit">km/h</span>
+        //   </div>
+        //   <div class="workout__details">
+        //     <span class="workout__icon">⛰</span>
+        //     <span class="workout__value">${review.elevationGain}</span>
+        //     <span class="workout__unit">m</span>
+        //   </div>
+        // </li>`
+        // }
 
         form.insertAdjacentHTML('afterend', html);
     }
 
     _moveToPopup(e) {
-        const workOutEl = e.target.closest('.workout');
-        if (!workOutEl) return;
-
-        const workout = this.#reviewsArray.find(work => work.id === workOutEl.dataset.id);
-        this.#map.setView(workout.coords, this.#mapZoomLevel, {
+        const reviewEl = e.target.closest('.review');
+        if (!reviewEl) return;
+        
+        const review = this.#reviewsArray.find(review => review.id === parseInt(reviewEl.dataset.id));
+        console.log(typeof(reviewEl.dataset.id));
+        this.#map.setView(review.coords, this.#mapZoomLevel, {
             animate:true,
             pan: {
                 duration: 1,
@@ -306,8 +266,8 @@ class App {
         if (!data) return;
 
         this.#reviewsArray = data;
-        this.#reviewsArray.forEach(work => {
-            this._renderWorkout(work)
+        this.#reviewsArray.forEach(review => {
+            this._renderReview(review)
         });
     }
 

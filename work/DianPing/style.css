@@ -64,7 +64,7 @@
     width: 0;
   }
   
-  .workout {
+  .review {
     background-color: var(--color-dark--2);
     border-radius: 5px;
     padding: 1.5rem 2.25rem;
@@ -75,36 +75,44 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 0.75rem 1.5rem;
   }
-  .workout--running {
-    border-left: 5px solid var(--color-rate--normal);
+
+
+  .review--perfect {
+    border-left: 5px solid var(--color-rate--perfect);
   }
-  .workout--cycling {
+  .review--good {
     border-left: 5px solid var(--color-rate--good);
   }
+  .review--normal {
+    border-left: 5px solid var(--color-rate--normal);
+  }
+  .review--bad {
+    border-left: 5px solid var(--color-rate--bad);
+  }
   
-  .workout__title {
+  .review__title {
     font-size: 1.7rem;
     font-weight: 600;
     grid-column: 1 / -1;
   }
   
-  .workout__details {
+  .review__details {
     display: flex;
     align-items: baseline;
   }
   
-  .workout__icon {
+  .review__icon {
     font-size: 1.8rem;
     margin-right: 0.2rem;
     height: 0.28rem;
   }
   
-  .workout__value {
+  .review__value {
     font-size: 1.5rem;
     margin-right: 0.5rem;
   }
   
-  .workout__unit {
+  .review__unit {
     font-size: 1.1rem;
     color: var(--color-light--1);
     text-transform: uppercase;
