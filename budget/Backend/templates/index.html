@@ -5,6 +5,8 @@
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600" rel="stylesheet" type="text/css">
         <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
         <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='CSS/style.css') }}">
         <title>Budget Calculator</title>
     </head>
@@ -12,7 +14,7 @@
         <div class="top">
             <div class="budget">
                 <div class="budget__title">
-                    Available Budget in <span class="budget__title--month">{{ month }}</span>:
+                    Available Budget in <span class="budget__title--month">{{ date}}</span>:
                 </div>
                 
                 <div class="budget__value">+ 0</div>
@@ -46,10 +48,11 @@
                     </select>
 
                     <select class="add__category">
-                        <option value="food" selected>food</option>
-                        <option value="transportation">transportation</option>
-                        <option value="home">home</option>
-                        <option value="entertainment">entertainment</option>
+                        <option value="salary" selected>Salary</option>\
+                        <option value="saving">Saving</option>\
+                        <option value="investment">Investment</option>\
+                        <option value="pension">Pension</option>\
+                        <option value="inc_other">Other</option>
                     </select>
 
                     <input type="text" class="add__description" placeholder="Add description">
@@ -89,11 +92,8 @@
                             </div>
                         </div>
                         -->
-                        
                     </div>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-                    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-                    <div class="chart" id="piegraph"></div>
+                    <div class="chart" id="income_piegraph"></div>
                 </div>
                 
                 
@@ -128,9 +128,14 @@
                         -->
                         
                     </div>
+                    <div class="chart" id="expense_piegraph"></div>
+
                 </div>
             </div>
         </div>
+
+
+        <div class="chart" id="overall_piegraph"></div>
 
         
         

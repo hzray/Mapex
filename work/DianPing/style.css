@@ -165,7 +165,7 @@
     padding: 0.3rem 0.0rem;
     font-family: inherit;
     font-size:  1.4rem;
-    text-align: center;
+
     border: none;
     border-radius: 3px;
     background-color: var(--color-light--3);
@@ -218,7 +218,3 @@
     border-left: 5px solid var(--color-rate--perfect);
   }
 
-select option {
-    direction: ltr;
-}
-  
