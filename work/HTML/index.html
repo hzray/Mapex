@@ -5,6 +5,19 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600" rel="stylesheet" type="text/css">
         <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+
+        <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+      crossorigin=""
+    />
+    <script
+      defer
+      src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+      integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+      crossorigin=""
+    ></script>
         <link type="text/css" rel="stylesheet" href="../CSS/style.css">
         <title>Budget Calculator</title>
     </head>
@@ -47,13 +60,12 @@
                     </select>
 
                     <select class="add__category">
-                        <option value="salary" selected>Salary</option>\
-                        <option value="saving">Saving</option>\
-                        <option value="investment">Investment</option>\
-                        <option value="pension">Pesion</option>\
-                        <option value="inc_other">Other</option>    
+                       <option value="salary" selected>Salary</option>\
+                              <option value="saving">Saving</option>\
+                              <option value="investment">Investment</option>\
+                              <option value="pension">Pension</option>\
+                              <option value="inc_other">Other</option>
                     </select>
-
 
                     <input type="text" class="add__description" placeholder="Add description">
                     <input type="number" class="add__value" placeholder="Value">
@@ -131,6 +143,8 @@
                 </div>
             </div>
         </div>
+
+        <div id="map"></div>
         
         <!-- <script src="../JS/app.js"></script> -->
         <script src="../JS/test.js"></script>

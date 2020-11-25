@@ -16,8 +16,8 @@ class Expense {
         this.percentage = -1;
     }
     calPercentage() {
-        if (budgetController.getTotalIncome() > 0) {
-            this.percentage = Math.round(((this.amount / budgetController.getTotalIncome()) * 100));
+        if (BudgetController.getTotalIncome() > 0) {
+            this.percentage = Math.round(((this.amount / BudgetController.getTotalIncome()) * 100));
         } else {
             this.percentage = -1;
         }
@@ -26,7 +26,7 @@ class Expense {
 
 
 
-var budgetController = (function() {
+var BudgetController = (function() {
     var expenseRecords = []; // Array of Expense objects
     var incomeRecords = []; // Array of Income objects
     var totalExpenses = 0;
@@ -164,7 +164,7 @@ var ViewController = (function() {
         addItemToListView: function(type) {
             var item, html, newhtml, element;
             // Create HTML String with placeholder text
-            item = budgetController.getLastItem(type);
+            item = BudgetController.getLastItem(type);
 
             if (type === 'inc') {
                 element = DOMstrings.incomeList;
@@ -202,14 +202,14 @@ var ViewController = (function() {
         // The part done by C++
         updateTotalsView: function() {
             var totalIncome, totalExpenses;
-            totalIncome = budgetController.getTotalIncome();
-            totalExpenses = budgetController.getTotalExpenses();
+            totalIncome = BudgetController.getTotalIncome();
+            totalExpenses = BudgetController.getTotalExpenses();
             $(DOMstrings.incomeTotal).text(formatNumber(totalIncome, 'inc'))
             $(DOMstrings.expenseTotal).text(formatNumber(totalExpenses, 'exp'))
         },
 
         updatePercentageView: function() {
-            var expensePercentage = budgetController.getExpensePercentage();
+            var expensePercentage = BudgetController.getExpensePercentage();
             if (expensePercentage < 0) {
                 $(DOMstrings.expensePercent).text('---')
             } else {
@@ -220,14 +220,14 @@ var ViewController = (function() {
         updateBudgetView: function() {
 
             var netBudget, type;
-            netBudget = budgetController.getNetBudget();
+            netBudget = BudgetController.getNetBudget();
             type = netBudget > 0 ? 'inc':'exp';
             $(DOMstrings.budgetValue).text(formatNumber(netBudget, type));
         },
 
         updateExpenseItemPercentageView: function() {
             // 1. Read percentages 
-            var percentages = budgetController.getPercentages();
+            var percentages = BudgetController.getPercentages();
             // 2. Update the UI with the new percentages
             displayPercentages(percentages)
         },
@@ -284,7 +284,26 @@ var ViewController = (function() {
             return DOMstrings;
         }
     }
-    
+}())
+
+var CommunicationController = (function() {
+    return {
+        sendBudgetToFlask: function() {
+            var totalIncome, totalExpenses;
+            totalIncome = BudgetController.getTotalIncome();
+            totalExpenses = BudgetController.getTotalExpenses();
+            $.ajax({
+                url: "/bar",
+                type: "GET",
+                contentType: 'application/json;charset=UTF-8',
+                data: {'income': totalIncome, 'expense':totalExpenses},
+                dataType:"json",
+                success: function (data) {
+                    Plotly.newPlot('piegraph', data);
+                }
+            });
+        }
+    }
 }())
 
 
@@ -297,11 +316,11 @@ var addItem = function() {
         alert('incorrect input~');
         return;
     }
-    budgetController.addItemToBuffer(info.type, info.description, info.amount, info.category);
-    budgetController.updateTotals();
-    budgetController.updateNetBudget();
-    budgetController.updateExpensePercentage();
-    budgetController.updateItemPercentage();
+    BudgetController.addItemToBuffer(info.type, info.description, info.amount, info.category);
+    BudgetController.updateTotals();
+    BudgetController.updateNetBudget();
+    BudgetController.updateExpensePercentage();
+    BudgetController.updateItemPercentage();
     
     ViewController.addItemToListView(info.type);
     ViewController.updateBudgetView();
@@ -323,11 +342,11 @@ var deleteItem = function(event) {
         id = splitID[1];
 
         
-        budgetController.deleteFromBuffer(type, id); 
-        budgetController.updateTotals();
-        budgetController.updateNetBudget();
-        budgetController.updateExpensePercentage();
-        budgetController.updateItemPercentage();
+        BudgetController.deleteFromBuffer(type, id); 
+        BudgetController.updateTotals();
+        BudgetController.updateNetBudget();
+        BudgetController.updateExpensePercentage();
+        BudgetController.updateItemPercentage();
 
         ViewController.deleteFromListView(itemID)
         ViewController.updateBudgetView();
@@ -372,6 +391,32 @@ var setupEventListener = (function() {
     // sep up time
     ViewController.displayMonth();
 })() 
+
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+            const { latitude } = position.coords;
+            const { longitude } = position.coords
+            console.log(latitude, longitude);
+            const coords = [latitude, longitude];
+
+            const map = L.map('map').setView(coords, 13); 
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            L.marker(coords)
+                .addTo(map)
+                .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+                .openPopup();
+            },
+
+        function() {
+            alert('Could not get your position')
+        }
+    )
+};
 
 
 
