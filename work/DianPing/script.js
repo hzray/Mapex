@@ -20,27 +20,33 @@ class Review {
         this.name = name;
         this.price = price;
         this.rate = rate;
-        this.setMarker();
+        this.setDescription();
+        this.setWordRate();
     }
 
-    setMarker() {
-        var markerIcon = this._makeMarkerIcon(this.convertRate(this.rate));
-        this.marker  = L.marker(this.coords, {icon:markerIcon});
+    static getInstance(review) {
+        return new Review(review.id, 
+                        review.coords,
+                        review.type,
+                        review.name,
+                        review.price,
+                        review.rate)
     }
 
-    convertRate() {
+
+    setWordRate() {
         if (this.rate <= 1) {
-            return 'bad';
+            this.wordRate = 'bad';
         } else if (this.rate <= 3) {
-            return 'normal';
+            this.wordRate = 'normal';
         } else if (this.rate === 4) {
-            return 'good';
+            this.wordRate = 'good';
         } else {
-            return 'perfect';
+            this.wordRate = 'perfect';
         }
     };
 
-    getDescription() {
+    setDescription() {
         this.description = '';
         var symbol;
         switch (this.type) {
@@ -67,31 +73,7 @@ class Review {
                 break;
         }
         this.description = this.description + symbol + '    ' + this.name;
-        return this.description
     }
-
-    _makeMarkerIcon(rate) {
-        var color, url, icon;
-        if (rate === 'perfect') {
-           color = 'blue';
-        } else if (rate === 'good') {
-            color = 'green';
-        } else if (rate === 'normal'){
-            color = 'orange';
-        } else {
-            color = 'red';
-        }
-        url = `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`;
-        icon = new L.Icon({
-            iconUrl: url,
-            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-            shadowSize: [41, 41]
-          });
-        return icon;
-    }   
 }
 
 
@@ -103,13 +85,15 @@ class App {
     #reviewsArray = [];
     #mapZoomLevel = 13;
     #layerGroup;
+    #markerArray = [];
 
     constructor() {
+        
+
         // Get User's position
         this._getPosition();
 
         // Get data from local storage
-
         this._getLocalStorage();
 
         form.addEventListener('submit', this._newReview.bind(this));
@@ -141,8 +125,6 @@ class App {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(this.#map);
         this.#layerGroup = L.layerGroup().addTo(this.#map);
-
-
         this.#map.on('click', this._showForm.bind(this));
         this.#reviewsArray.forEach(review => {
             this._renderReviewMarker(review);
@@ -188,6 +170,7 @@ class App {
 
         const id = this.#reviewsArray.length === 0 ? 0 : this.#reviewsArray[this.#reviewsArray.length-1].id+1;
         const review = new Review(id, [lat,lng], type, name, price, rate);
+        
         // Add new object to workout array
         this.#reviewsArray.push(review);
         
@@ -202,10 +185,15 @@ class App {
         this._setLocalStorage();
     }
 
+
+
     _renderReviewMarker(review) {
-        var popupContent, rate;
-        popupContent = review.getDescription();
-        review.marker.addTo(this.#layerGroup)
+        var popupContent, rate, marker;
+        popupContent = review.description;
+        marker = getMarker(review);
+        this.#markerArray.push(marker);
+        
+        marker.addTo(this.#layerGroup)
             .bindPopup(
                 L.popup({
                     maxWidth: 250,
@@ -219,7 +207,7 @@ class App {
     }
 
     _renderReview(review) {
-        var rate = review.convertRate();
+        var rate = review.wordRate;
         let html = `
         <li class="review review--${rate}" id="${review.id}">
             <h2 class="review__title">${review.description}</h2>
@@ -262,6 +250,7 @@ class App {
     _getLocalStorage() {
         const data = JSON.parse(localStorage.getItem('reviews'));
         if (!data) return;
+        console.log(data);
         this.#reviewsArray = data;
         this.#reviewsArray.forEach(review => {
             this._renderReview(review)
@@ -289,6 +278,7 @@ class App {
         if (index !== -1) {
             this.#reviewsArray.splice(index, 1); 
         }
+        this._setLocalStorage();
     }
 
     _deleteReviewMarker(id) {
@@ -298,9 +288,13 @@ class App {
         })
         index = ids.indexOf(parseInt(id));
         if (index !== -1) {
-            targetMarker = this.#reviewsArray[index].marker;
+            targetMarker = this.#markerArray[index];
             this.#map.removeLayer(targetMarker);
         }
+    }
+
+    getMarkerArray() {
+        return this.#markerArray
     }
 
     _deleteReviewFromList(selectorID) {
@@ -345,6 +339,37 @@ class App {
         }
     }
 };
+
+
+function getMarker(review) {
+    var markerIcon, marker;
+    markerIcon = makeMarkerIcon(review.wordRate);
+    marker  = L.marker(review.coords, {icon:markerIcon});
+    return marker;
+}
+
+function makeMarkerIcon(rate) {
+    var color, url, icon;
+    if (rate === 'perfect') {
+       color = 'blue';
+    } else if (rate === 'good') {
+        color = 'green';
+    } else if (rate === 'normal'){
+        color = 'orange';
+    } else {
+        color = 'red';
+    }
+    url = `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`;
+    icon = new L.Icon({
+        iconUrl: url,
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+      });
+    return icon;
+}   
 
 
    
