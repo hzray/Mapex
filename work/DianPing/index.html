@@ -7,7 +7,7 @@
     <link rel="shortcut icon" type="image/png" href="./icon.png" />
     <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
 
-
+    
     <link
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
       rel="stylesheet"
@@ -20,6 +20,7 @@
       integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
       crossorigin=""
     />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script
       defer
       src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
@@ -37,7 +38,7 @@
     <div class="sidebar">
       <img src="logo.png" alt="Logo" class="logo" />
 
-      <ul class="reviews">
+      <ul class="reviews" id="ulClass">
         <form class="form hidden">
           <div class="form__row">
             <label class="form__label">Type</label>
@@ -86,12 +87,12 @@
       <div class="filters">
           <select class="filter filter__type">
             <option value="all" selected>All type</option>
-            <option value="exp">Food</option>
-            <option value="exp">Hotel</option>
-            <option value="exp">Beauty</option>
-            <option value="exp">Leisure</option>
-            <option value="exp">Activity</option>
-            <option value="exp">Attraction</option>
+            <option value="food">Food</option>
+            <option value="hotel">Hotel</option>
+            <option value="beauty">Beauty</option>
+            <option value="leisure">Leisure</option>
+            <option value="activity">Activity</option>
+            <option value="attraction">Attraction</option>
           </select>
           <select class="filter filter__rate">
             <option value="all" selected>All Rate</option>

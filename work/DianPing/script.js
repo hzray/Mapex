@@ -33,7 +33,7 @@ class Review {
             return 'bad';
         } else if (this.rate <= 3) {
             return 'normal';
-        } else if (this.rate == 4) {
+        } else if (this.rate === 4) {
             return 'good';
         } else {
             return 'perfect';
@@ -91,8 +91,7 @@ class Review {
             shadowSize: [41, 41]
           });
         return icon;
-    }
-        
+    }   
 }
 
 
@@ -103,6 +102,7 @@ class App {
     #mapEvent;
     #reviewsArray = [];
     #mapZoomLevel = 13;
+    #layerGroup;
 
     constructor() {
         // Get User's position
@@ -116,9 +116,8 @@ class App {
         // inputType.addEventListener('change', this._toggleElevationField);
         containerReviews.addEventListener('click', this._moveToPopup.bind(this));   
         containerReviews.addEventListener('click', this._deleteReview.bind(this));   
-        typeFilter.addEventListener('change', function() {
-            alert('changed!');
-        })
+        typeFilter.addEventListener('change', this._filterReview.bind(this));
+        rateFilter.addEventListener('change', this._filterReview.bind(this));
 
     }
 
@@ -138,11 +137,10 @@ class App {
         const { longitude } = position.coords
         const coords = [latitude, longitude];
         this.#map = L.map('map').setView(coords,this.#mapZoomLevel);
-
         L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(this.#map);
-
+        this.#layerGroup = L.layerGroup().addTo(this.#map);
 
 
         this.#map.on('click', this._showForm.bind(this));
@@ -165,6 +163,7 @@ class App {
         setTimeout(() => (form.style.display = 'grid'), 1000);
     }
 
+
     // _toggleElevationField() {
     //     inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
     //     inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
@@ -177,7 +176,7 @@ class App {
         const type = inputType.value;
         const name = inputName.value;
         const price = inputPrice.value;
-        const rate = inputRate.value;
+        const rate = parseInt(inputRate.value);
 
         const { lat, lng } = this.#mapEvent.latlng;
         if (name ===  '' || price === '') {
@@ -195,7 +194,6 @@ class App {
         // Render workout on map as marker
         this._renderReviewMarker(review);
 
-
         // Render workout on list
         this._renderReview(review);
 
@@ -205,9 +203,9 @@ class App {
     }
 
     _renderReviewMarker(review) {
-        var popupContent, rate, markerIcon, customerMarker;
+        var popupContent, rate;
         popupContent = review.getDescription();
-        review.marker.addTo(this.#map)
+        review.marker.addTo(this.#layerGroup)
             .bindPopup(
                 L.popup({
                     maxWidth: 250,
@@ -308,6 +306,43 @@ class App {
     _deleteReviewFromList(selectorID) {
         var el = document.getElementById(selectorID);
         el.parentNode.removeChild(el);
+    }
+
+
+    _filterReview() {
+        $('ul li').remove()
+        this.#layerGroup.clearLayers();
+
+        var type, rate, review;;
+        type = typeFilter.value;
+        rate = rateFilter.value;
+        if (type === 'all' && rate === 'all') {
+            for (review of this.#reviewsArray) {
+                this._renderReview(review);
+                this._renderReviewMarker(review);
+        }
+        } else if (type === 'all') {
+            for (review of this.#reviewsArray) {
+                if (review.rate === parseInt(rate)) {
+                    this._renderReview(review);
+                    this._renderReviewMarker(review);
+                }
+            }
+        } else if (rate === 'all') {
+            for (review of this.#reviewsArray) {
+                if (review.type === type) {
+                    this._renderReview(review);
+                    this._renderReviewMarker(review);
+                }
+            }
+        } else {
+            for (review of this.#reviewsArray) {
+                if (review.type === type && review.rate === parseInt(rate)) {
+                    this._renderReview(review);
+                    this._renderReviewMarker(review);
+                }
+            }
+        }
     }
 };
 
