@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="shortcut icon" type="image/png" href="./icon.png" />
+    <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+
 
     <link
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
@@ -63,11 +65,11 @@
           <div class="form__row">
             <label class="form__label">Rate</label>
              <select class="form__input form__input--rate">
-              <option value=1>1</option>
-              <option value=2>2</option>
-              <option value=3>3</option>
-              <option value=4>4</option>
-              <option value=5>5</option>
+              <option value=1>⭐</option>
+              <option value=2>⭐⭐</option>
+              <option value=3>⭐⭐⭐</option>
+              <option value=4>⭐⭐⭐⭐</option>
+              <option value=5>⭐⭐⭐⭐⭐</option>
             </select>
           </div>
           <div class="form__row form__row--hidden">
@@ -79,56 +81,29 @@
           </div>
           <button class="form__btn">OK</button>
         </form>
-
-        <!-- <li class="workout workout--running" data-id="1234567890">
-          <h2 class="workout__title">Running on April 14</h2>
-          <div class="workout__details">
-            <span class="workout__icon">🏃‍♂️</span>
-            <span class="workout__value">5.2</span>
-            <span class="workout__unit">km</span>
-          </div>
-          <div class="workout__details">
-            <span class="workout__icon">⏱</span>
-            <span class="workout__value">24</span>
-            <span class="workout__unit">min</span>
-          </div>
-          <div class="workout__details">
-            <span class="workout__icon">⚡️</span>
-            <span class="workout__value">4.6</span>
-            <span class="workout__unit">min/km</span>
-          </div>
-          <div class="workout__details">
-            <span class="workout__icon">🦶🏼</span>
-            <span class="workout__value">178</span>
-            <span class="workout__unit">spm</span>
-          </div>
-        </li>
-        <li class="workout workout--cycling" data-id="1234567891">
-          <h2 class="workout__title">Cycling on April 5</h2>
-          <div class="workout__details">
-            <span class="workout__icon">🚴‍♀️</span>
-            <span class="workout__value">27</span> 
-            <span class="workout__unit">km</span>
-          </div>
-          <div class="workout__details">
-            <span class="workout__icon">⏱</span>
-            <span class="workout__value">95</span>
-            <span class="workout__unit">min</span>
-          </div>
-          <div class="workout__details">
-            <span class="workout__icon">⚡️</span>
-            <span class="workout__value">16</span>
-            <span class="workout__unit">km/h</span>
-          </div>
-          <div class="workout__details">
-            <span class="workout__icon">⛰</span>
-            <span class="workout__value">223</span>
-            <span class="workout__unit">m</span>
-          </div>
-        </li> -->
       </ul>
-    </div>
 
+      <div class="filters">
+          <select class="filter filter__type">
+            <option value="all" selected>All type</option>
+            <option value="exp">Food</option>
+            <option value="exp">Hotel</option>
+            <option value="exp">Beauty</option>
+            <option value="exp">Leisure</option>
+            <option value="exp">Activity</option>
+            <option value="exp">Attraction</option>
+          </select>
+          <select class="filter filter__rate">
+            <option value="all" selected>All Rate</option>
+            <option value="1">⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="5">⭐⭐⭐⭐⭐</option>
+          </select>
+      </div>
+
+    </div>
     <div id="map"></div>
   </body>
 </html>
