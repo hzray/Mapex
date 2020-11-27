@@ -279,3 +279,8 @@
     padding: 0.3rem 0rem;
     font-size: 5px;
 }
+
+a {
+  color: hotpink;
+  text-decoration: none;
+}

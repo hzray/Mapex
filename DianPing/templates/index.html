@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="shortcut icon" type="image/png" href="./icon.png" />
+    <link rel="shortcut icon" type="image/png" href="{{url_for('static', filename='icon.png') }}" />
     <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
 
     
@@ -13,7 +13,7 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
@@ -31,12 +31,12 @@
     <!--<script defer src="other.js"></script> -->
 
     
-    <script defer src="script.js"></script>
+    
     <title>Mapty - Map your experience</title>
   </head>
   <body>
     <div class="sidebar">
-      <img src="logo.png" alt="Logo" class="logo" />
+      <img src="{{url_for('static', filename='logo.png') }}" alt="Logo" class="logo" />
 
       <ul class="reviews" id="ulClass">
         <form class="form hidden">
@@ -103,9 +103,12 @@
             <option value="4">⭐⭐⭐⭐</option>
             <option value="5">⭐⭐⭐⭐⭐</option>
           </select>
+          <a href="{{ url_for('download_csv') }}" class="download">Download Data</a>
       </div>
 
     </div>
     <div id="map"></div>
+
+    <script src="{{url_for('static', filename='script.js') }}"></script>
   </body>
 </html>

@@ -102,7 +102,6 @@ class App {
         containerReviews.addEventListener('click', this._deleteReview.bind(this));   
         typeFilter.addEventListener('change', this._filterReview.bind(this));
         rateFilter.addEventListener('change', this._filterReview.bind(this));
-
     }
 
     _getPosition() {
@@ -146,11 +145,6 @@ class App {
     }
 
 
-    // _toggleElevationField() {
-    //     inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
-    //     inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
-    // }
-
     _newReview(e) {
         e.preventDefault();
 
@@ -183,6 +177,8 @@ class App {
         this._hideForm();
 
         this._setLocalStorage();
+
+        this._updateServer();
     }
 
 
@@ -279,6 +275,7 @@ class App {
             this.#reviewsArray.splice(index, 1); 
         }
         this._setLocalStorage();
+        this._updateServer();
     }
 
     _deleteReviewMarker(id) {
@@ -290,11 +287,8 @@ class App {
         if (index !== -1) {
             targetMarker = this.#markerArray[index];
             this.#map.removeLayer(targetMarker);
+            this.#markerArray.splice(index, 1); 
         }
-    }
-
-    getMarkerArray() {
-        return this.#markerArray
     }
 
     _deleteReviewFromList(selectorID) {
@@ -337,6 +331,17 @@ class App {
                 }
             }
         }
+    }
+
+    _updateServer() {
+        var reviewArr = JSON.stringify(this.#reviewsArray);
+        $.ajax({
+            url: "/update-csv",
+            type: "POST",
+            contentType: 'application/json;charset=UTF-8',
+            data: reviewArr,
+            dataType:"json"
+        });
     }
 };
 

@@ -15,7 +15,7 @@ app = Flask(__name__)
 @app.route("/", methods=["POST","GET"] )
 def index():
     date = getDate()
-    return render_template("index.html", date=date)
+    return render_template("test.html")
 
 
 @app.route("/total_plot", methods=["POST","GET"])
