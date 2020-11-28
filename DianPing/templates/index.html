@@ -84,8 +84,9 @@
         </form>
       </ul>
 
-      <div class="filters">
-          <select class="filter filter__type">
+      <div class="footer">
+        <div class="filters">
+          <select class="filter filter--type">
             <option value="all" selected>All type</option>
             <option value="food">Food</option>
             <option value="hotel">Hotel</option>
@@ -95,7 +96,7 @@
             <option value="attraction">Attraction</option>
             <option value="attraction">Other</option>
           </select>
-          <select class="filter filter__rate">
+          <select class="filter filter--rate">
             <option value="all" selected>All Rate</option>
             <option value="1">⭐</option>
             <option value="2">⭐⭐</option>
@@ -103,7 +104,13 @@
             <option value="4">⭐⭐⭐⭐</option>
             <option value="5">⭐⭐⭐⭐⭐</option>
           </select>
-          <a href="{{ url_for('download_csv') }}" class="download">Download Data</a>
+        </div>
+          
+
+          <div class="external_link" >
+            <a href="{{ url_for('download_csv') }}" class="download">Download Data</a><br>
+            <a href="{{ url_for('random') }}">View Report</a>
+          </div>
       </div>
 
     </div>
