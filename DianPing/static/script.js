@@ -1,15 +1,14 @@
 'use strict';
 
 // prettier-ignore
-
 const form = document.querySelector('.form');
 const containerReviews = document.querySelector('.reviews');
 const inputType = document.querySelector('.form__input--type');
 const inputName = document.querySelector('.form__input--name');
 const inputPrice = document.querySelector('.form__input--price');
 const inputRate = document.querySelector('.form__input--rate');
-const typeFilter = document.querySelector('.filter__type');
-const rateFilter = document.querySelector('.filter__rate');
+const typeFilter = document.querySelector('.filter--type');
+const rateFilter = document.querySelector('.filter--rate');
 
 
 class Review {
@@ -88,15 +87,9 @@ class App {
     #markerArray = [];
 
     constructor() {
-        
-
-        // Get User's position
         this._getPosition();
-
-        // Get data from local storage
         this._getLocalStorage();
-
-        form.addEventListener('submit', this._newReview.bind(this));
+        form.addEventListener('submit', this._makeNewReview.bind(this));
         // inputType.addEventListener('change', this._toggleElevationField);
         containerReviews.addEventListener('click', this._moveToPopup.bind(this));   
         containerReviews.addEventListener('click', this._deleteReview.bind(this));   
@@ -126,7 +119,7 @@ class App {
         this.#layerGroup = L.layerGroup().addTo(this.#map);
         this.#map.on('click', this._showForm.bind(this));
         this.#reviewsArray.forEach(review => {
-            this._renderReviewMarker(review);
+            this._setReviewMarker(review);
         });
         
     }
@@ -145,7 +138,7 @@ class App {
     }
 
 
-    _newReview(e) {
+    _makeNewReview(e) {
         e.preventDefault();
 
         // Get data from form
@@ -169,10 +162,10 @@ class App {
         this.#reviewsArray.push(review);
         
         // Render workout on map as marker
-        this._renderReviewMarker(review);
+        this._setReviewMarker(review);
 
         // Render workout on list
-        this._renderReview(review);
+        this._setReviewList(review);
 
         this._hideForm();
 
@@ -183,7 +176,7 @@ class App {
 
 
 
-    _renderReviewMarker(review) {
+    _setReviewMarker(review) {
         var popupContent, rate, marker;
         popupContent = review.description;
         marker = getMarker(review);
@@ -202,7 +195,7 @@ class App {
             .openPopup();
     }
 
-    _renderReview(review) {
+    _setReviewList(review) {
         var rate = review.wordRate;
         let html = `
         <li class="review review--${rate}" id="${review.id}">
@@ -249,7 +242,7 @@ class App {
         console.log(data);
         this.#reviewsArray = data;
         this.#reviewsArray.forEach(review => {
-            this._renderReview(review)
+            this._setReviewList(review)
         });
     }
 
@@ -306,28 +299,28 @@ class App {
         rate = rateFilter.value;
         if (type === 'all' && rate === 'all') {
             for (review of this.#reviewsArray) {
-                this._renderReview(review);
-                this._renderReviewMarker(review);
+                this._setReviewList(review);
+                this._setReviewMarker(review);
         }
         } else if (type === 'all') {
             for (review of this.#reviewsArray) {
                 if (review.rate === parseInt(rate)) {
-                    this._renderReview(review);
-                    this._renderReviewMarker(review);
+                    this._setReviewList(review);
+                    this._setReviewMarker(review);
                 }
             }
         } else if (rate === 'all') {
             for (review of this.#reviewsArray) {
                 if (review.type === type) {
-                    this._renderReview(review);
-                    this._renderReviewMarker(review);
+                    this._setReviewList(review);
+                    this._setReviewMarker(review);
                 }
             }
         } else {
             for (review of this.#reviewsArray) {
                 if (review.type === type && review.rate === parseInt(rate)) {
-                    this._renderReview(review);
-                    this._renderReviewMarker(review);
+                    this._setReviewList(review);
+                    this._setReviewMarker(review);
                 }
             }
         }

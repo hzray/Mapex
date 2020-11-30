@@ -3,19 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/style.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+    <title>Report</title>
 </head>
-<body>
-    123
-    <div class = "outer"> 
-        <div class = "inner1">
-            Hello
-        </div>
-        <div class = "inner2">
-            Hello
+<body class="report--body">
+    <div class="tables">
+        {% for type in types %} 
+        {% if df[df.Type == type]|length != 0 %}
+            <h2 class="table_title">{{type.upper()}}</h2>
+            {{df[df.Type == type].reset_index().drop(columns=['index']).to_html()| safe}}
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class='graph'>
+        <h1> {{context.scatter |safe }} </h1>
+        <h1> {{context.piechart |safe }}</h1>
+        <div class='statistics'> 
+            <p> <span class="special_text">{{numReview}}</span> reviews have been made!</p> 
+            <p> Average rate of all experience: <span class="special_text">{{avgRate}}</span></p> 
         </div>
     </div>
+
+    
+   
 
 </body>
 </html>

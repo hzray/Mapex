@@ -1,3 +1,8 @@
+/* Reference:
+  https://www.youtube.com/watch?v=biI9OFH6Nmg&ab_channel=dcode
+*/
+
+
 :root {
     --color-rate--perfect:#00FFFF;
     --color-rate--good: #00c46a;
@@ -22,19 +27,19 @@
     box-sizing: border-box;
   }
   
-  body {
+  .index--body {
     font-family: 'Manrope', sans-serif;
     color: var(--color-light--2);
     font-weight: 400;
     line-height: 1.6;
     height: 100vh;
     overscroll-behavior-y: none;
-  
     background-color: #fff;
     padding: 2.5rem;
-  
     display: flex;
   }
+
+  
   
   /* GENERAL */
 
@@ -291,6 +296,8 @@
 
 
 .external_link {
+  font-size: 14px;
+  margin-left: 20px;
   float:left;
   width:150px;
   margin-top: 0px;
@@ -303,3 +310,95 @@ a {
   clear:left;
 }
 
+
+
+.report--body {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  overscroll-behavior-y: none;
+  background-color: #fff;
+  padding: 2.5rem;
+  display: flex;
+}
+
+.tables{
+  margin: 0 auto;
+  border-right: black;
+  border-width: 1px;
+}
+
+table{
+  border-collapse: collapse;
+  color: black;
+  margin:20px 0;
+  min-width: 500px;
+  border-color: transparent;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0,0,0,0.15);
+  font-size: 0.9em;
+}
+
+thead tr {
+  background-color: #009879;
+  text-align:left;
+  font-size: 15px;
+}
+
+
+
+thead tr, thead th {
+  text-align: left;
+  color: white;
+}
+
+
+th,tr,td {
+  text-align: left;
+  padding: 5px 8px;
+  
+}
+
+td {
+  font-size: 15px;
+  min-width: 80px;
+}
+
+tbody tr {
+  border-bottom: 1px soild #dddddd;
+  text-align:left
+}
+
+tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+.table_title{
+  color: #2d3439;
+  font-size: 20px;
+}
+
+.plot{
+  clear:both;
+  color:black
+}
+
+.random{
+  color:black
+}
+
+.statistics {
+  color:black;
+  margin-bottom: 25px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.special_text {
+  color:red;
+  font-weight: bold;
+}

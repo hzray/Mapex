@@ -34,7 +34,7 @@
     
     <title>Mapty - Map your experience</title>
   </head>
-  <body>
+  <body class="index--body">
     <div class="sidebar">
       <img src="{{url_for('static', filename='logo.png') }}" alt="Logo" class="logo" />
 
@@ -94,7 +94,7 @@
             <option value="leisure">Leisure</option>
             <option value="activity">Activity</option>
             <option value="attraction">Attraction</option>
-            <option value="attraction">Other</option>
+            <option value="other">Other</option>
           </select>
           <select class="filter filter--rate">
             <option value="all" selected>All Rate</option>
@@ -109,7 +109,8 @@
 
           <div class="external_link" >
             <a href="{{ url_for('download_csv') }}" class="download">Download Data</a><br>
-            <a href="{{ url_for('random') }}">View Report</a>
+            <a href="{{ url_for('show_report') }}", target="_blank" >View Report</a>
+
           </div>
       </div>
 
