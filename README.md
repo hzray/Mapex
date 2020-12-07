@@ -73,9 +73,15 @@ localhost:5000	// port number depends on Flask server, please have a look on tha
 
 ### Features
 
-1. Users can record experience and make comment with Interactive UI 
-2. Data analysis and visualization 
-3. Raw data processing and downloading
+1. Interactive UI by JavaScript+HTML5+CSS.
+2. Data analysis and visualization provided by Flask backend server.
+3. Fast calculation (in theory) provided by GO language.
+4. Raw data availability.
+5. Inter-languages communications.
+
+------
+
+### Demo
 
 <img src="https://csil-git1.cs.surrey.sfu.ca/ziruih/cmpt383project/raw/master/index_demo.png"/>
 <img src="https://csil-git1.cs.surrey.sfu.ca/ziruih/cmpt383project/raw/master/report_demo.png"/>
