@@ -77,6 +77,5 @@ localhost:5000	// port number depends on Flask server, please have a look on tha
 2. Data analysis and visualization 
 3. Raw data processing and downloading
 
-<img src="https://csil-git1.cs.surrey.sfu.ca/ziruih/cmpt383project/-/blob/master/index_demo.png"/>
-
-<img src="https://csil-git1.cs.surrey.sfu.ca/ziruih/cmpt383project/-/blob/master/report_demo.png"/>
+<img src="https://csil-git1.cs.surrey.sfu.ca/ziruih/cmpt383project/raw/master/index_demo.png"/>
+<img src="https://csil-git1.cs.surrey.sfu.ca/ziruih/cmpt383project/raw/master/report_demo.png"/>
