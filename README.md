@@ -48,31 +48,35 @@ $ cd project/Mapex/
 ##### Launch GO calculator
 
 ```
-/project/Mapex$ Go run calculator.go
+$ Go run calculator.go
 ```
 
 ##### Launch Python Server
 
 ```
-/project/Mapex$ source env/bin/activate
-(env)/project/Mapex$ python3 application.py
+$ source env/bin/activate
+(env)$ pip3 install flask
+(env)$ pip3 install pandas
+(env)$ pip3 install plotly
+(env)$ python3 application.py
 ```
 
 ##### Launch the website from browser
 
 ```
-127.0.0.1: 5000	// port number depends on flask server, please have a look on that
+localhost:5000	// port number depends on Flask server, please have a look on that
 ```
 
 *You may zoom the browser to have better presentation.*
 
+*The browser may ask permission for geolocation.*
+
 ### Features
 
-1. Review recording
-2. Data Analysis
+1. Users can record experience and make comment with Interactive UI 
+2. Data analysis and visualization 
 3. Raw data processing and downloading
 
+<img src="https://csil-git1.cs.surrey.sfu.ca/ziruih/cmpt383project/-/blob/master/index_demo.png"/>
 
-
-
-
+<img src="https://csil-git1.cs.surrey.sfu.ca/ziruih/cmpt383project/-/blob/master/report_demo.png"/>
