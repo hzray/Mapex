@@ -1,1 +1,6 @@
-Type,Name,Rate,Price
+Type,Name,Rate,Price,Description
+activity,SFU Field,3,0,"Some parts are under-construction, not a bad place to have a run"
+attraction,Marine Park,4,0,good place to spend Sunday
+beauty,Tony's Studio,3,30,Tony is a good barber...
+food,Canadian Piazza Plus,5,15,Best Indian Cuisine around SFU!
+food,Tugo Sushi,4,12,Nice bento box

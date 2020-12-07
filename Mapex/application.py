@@ -78,9 +78,9 @@ def update_csv():
 
 
 def makeDataFrame(reviewArr):
-    df = pd.DataFrame(columns=['Type', 'Name', 'Rate', 'Price'])
+    df = pd.DataFrame(columns=['Type', 'Name', 'Rate', 'Price', 'Description'])
     for review in reviewArr:
-        row = [review['type'], review['name'], review['rate'], review['price']]
+        row = [review['type'], review['name'], review['rate'], review['price'], review['descript']]
         df.loc[len(df)] = row
     return df
 
