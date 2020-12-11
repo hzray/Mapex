@@ -24,9 +24,14 @@ You can also download the raw data and get a report of all your reviews.
 ### Inter-Language Communication
 
 - JavaScript and Python
-  - Flask Restful API
+  - Through Flask Restful API
+  - Javascript sends array of review objects to Flask server
+  - Flask server receives the data and make data analysis and visualization with help of Pandas and Plotly library
+  - Flask server renders result on html.
 - Python and GO
-  - RabbitMQ
+  - Through RabbitMQ
+  - Flaser server sends numbers to be calculated to Go
+  - Go does the calculation and send the result back.
 
 ### Usage
 
@@ -76,7 +81,7 @@ localhost:5000	// port number depends on Flask server, please have a look on tha
 1. Interactive UI by JavaScript+HTML5+CSS.
 2. Data analysis and visualization provided by Flask backend server.
 3. Fast calculation (in theory) provided by GO language.
-4. Raw data availability.
+4. Download raw data from server.
 5. Inter-languages communications.
 
 ------
