@@ -25,12 +25,12 @@ You can also download the raw data and get a report of all your reviews.
 
 - JavaScript and Python
   - Through Flask Restful API
-  - Javascript sends array of review objects to Flask server
-  - Flask server receives the data and make data analysis and visualization with help of Pandas and Plotly library
+  - Javascript sends array of review objects (via HTTP) to Flask server.
+  - After receive the data, Flask server will make data analysis and visualization with help of Pandas and Plotly library.
   - Flask server renders result on html.
 - Python and GO
   - Through RabbitMQ
-  - Flaser server sends numbers to be calculated to Go
+  - Flaser server sends numbers to be calculated to Go.
   - Go does the calculation and send the result back.
 
 ### Usage
@@ -59,11 +59,10 @@ $ Go run calculator.go
 ##### Launch Python Server
 
 ```
-$ source env/bin/activate
-(env)$ pip3 install flask
-(env)$ pip3 install pandas
-(env)$ pip3 install plotly
-(env)$ python3 application.py
+$ pip3 install flask
+$ pip3 install pandas
+$ pip3 install plotly
+$ python3 application.py
 ```
 
 ##### Launch the website from browser
@@ -75,6 +74,8 @@ localhost:5000	// port number depends on Flask server, please have a look on tha
 *You may zoom the browser to have better presentation.*
 
 *The browser may ask permission for geolocation.*
+
+*Tested on Chrome.*
 
 ### Features
 
