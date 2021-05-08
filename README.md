@@ -89,5 +89,5 @@ localhost:5000	// port number depends on Flask server, please have a look on tha
 
 ### Demo
 
-<img src="https://csil-git1.cs.surrey.sfu.ca/ziruih/cmpt383project/raw/master/index_demo.png"/>
-<img src="https://csil-git1.cs.surrey.sfu.ca/ziruih/cmpt383project/raw/master/report_demo.png"/>
+<img src="https://github.com/ziruih999/Mapex/blob/main/index_demo.png"/>
+<img src="https://github.com/ziruih999/Mapex/blob/main/report_demo.png"/>
